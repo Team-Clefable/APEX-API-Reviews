@@ -20,5 +20,10 @@
   "dependencies": {
     "express": "^4.17.3",
     "pg": "^8.7.3"
+  },
+  "devDependencies": {
+    "eslint": "^8.10.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.25.4"
   }
 }
