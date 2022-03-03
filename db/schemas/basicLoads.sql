@@ -1,0 +1,2 @@
+-- loads in review photos, reviews,  half of characteristics, and characteristics_reviews csv files
+-- loads tables review_photos, reviews, characteristics, and characteristics_reviews
