@@ -5,9 +5,11 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "node server/index.js",
+    "server-dev": "nodemon server/index.js",
     "build-db": "psql -d reviews -f db/schemas/schemas.sql",
-    "transform-db": "psql -d reviews -f db/schemas/transform.sql",
-    "load-db": "psql -d reviews -f db/schemas/load.sql"
+    "load-db": "psql -d reviews -f db/schemas/load.sql",
+    "transform-db": "psql -d reviews -f db/schemas/transform.sql"
   },
   "repository": {
     "type": "git",
@@ -27,6 +29,7 @@
   "devDependencies": {
     "eslint": "^8.10.0",
     "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-plugin-import": "^2.25.4"
+    "eslint-plugin-import": "^2.25.4",
+    "nodemon": "^2.0.15"
   }
 }

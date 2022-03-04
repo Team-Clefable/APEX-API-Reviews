@@ -51,12 +51,12 @@ CREATE TABLE characteristics_prod_sums (
 );
 
 -- query to load meta product_ids
-INSERT INTO meta (product_id) SELECT product_id FROM reviews ON CONFLICT (product_id) DO NOTHING;
+-- INSERT INTO meta (product_id) SELECT product_id FROM reviews ON CONFLICT (product_id) DO NOTHING;
 
 -- psql query to load characteristics
-INSERT INTO characteristics (id, char_name) SELECT id, characteristic_name FROM temp_characteristics ON CONFLICT (char_name) DO NOTHING;
-
-\COPY characteristics_reviews FROM 'data/characteristics_reviews.csv' WITH DELIMITER ',' CSV HEADER;
+-- INSERT INTO characteristics (id, char_name) SELECT id, characteristic_name FROM temp_characteristics ON CONFLICT (char_name) DO NOTHING;
 
 -- psql query to load charactereistics_prod_sums
-INSERT INTO charactereistics_prod_sums (product_id, characteristic_id) SELECT
+-- INSERT INTO charactereistics_prod_sums (product_id, characteristic_id) SELECT
+
+-- ALTER TABLES
