@@ -7,9 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "node server/index.js",
     "server-dev": "nodemon server/index.js",
-    "build-db": "psql -d reviews -f db/schemas/schemas.sql",
-    "load-db": "psql -d reviews -f db/schemas/load.sql",
-    "transform-db": "psql -d reviews -f db/schemas/transform.sql"
+    "build-db": "psql -d reviews -f schemas/schemas.sql",
+    "load-db": "psql -d reviews -f schemas/load.sql",
+    "transform-db": "psql -d reviews -f schemas/transform.sql"
   },
   "repository": {
     "type": "git",
