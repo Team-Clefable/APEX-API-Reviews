@@ -1,1 +1,0 @@
--- will go through reviews table and update counts of the meta info

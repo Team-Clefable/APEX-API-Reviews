@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build-db": "psql -d reviews -f db/schemas/schemas.sql",
-    "load-db": "psql -d reviews -f db/schemas/basicLoads.sql"
+    "transform-db": "psql -d reviews -f db/schemas/transform.sql",
+    "load-db": "psql -d reviews -f db/schemas/load.sql"
   },
   "repository": {
     "type": "git",
