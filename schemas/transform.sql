@@ -41,34 +41,28 @@ INSERT INTO characteristics (id, char_name)
   FROM product_characteristics_join
   ON CONFLICT (char_name) DO NOTHING;
 
-
-
-
-
 ALTER TABLE product_characteristics_join DROP COLUMN IF EXISTS updated_id;
 ALTER TABLE product_characteristics_join DROP COLUMN IF EXISTS total_score;
 ALTER TABLE product_characteristics_join ADD COLUMN updated_id INT references characteristics(id);
 ALTER TABLE product_characteristics_join ADD COLUMN total_score INT DEFAULT 0;
-
-
--- INSERT INTO product_characteristics_join (updated_id)
---   SELECT c.id
---   FROM characteristics c
---   WHERE c.char_name = product_characteristics_join.characteristic_name;
 
 UPDATE product_characteristics_join
   SET updated_id = c.id
   FROM characteristics c
   WHERE c.char_name = characteristic_name;
 
+
+
+
+-- load final characteristics_review table
+-- INSERT INTO characteristics_reviews (id, review_id, char_value)
+--   SELECT
+
 -- ALTER TABLES
 
 -- UNIX time to actual time
--- -- add datetime column
+-- ALTER TABLE reviews ADD COLUMN date DATETIME
 -- -- select the unix time and do the conversion then insert into datetime row
 -- -- alter and drop unix column
 
--- update characteristics reviews
--- -- add in updated characterics id column
--- -- fill that column
--- -- drop the redundant one
+-- Link up foreign keys
