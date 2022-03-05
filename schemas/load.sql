@@ -4,4 +4,4 @@
 \COPY reviews FROM 'data/reviews.csv' WITH DELIMITER ',' CSV HEADER;
 \COPY photos FROM 'data/reviews_photos.csv' WITH DELIMITER ',' CSV HEADER;
 \COPY product_characteristics_join FROM 'data/characteristics.csv' WITH DELIMITER ',' CSV HEADER;
-\COPY temp_characteristics_reviews FROM 'data/characteristic_reviews.csv' WITH DELIMITER ',' CSV HEADER;
+\COPY characteristics_reviews FROM 'data/characteristic_reviews.csv' WITH DELIMITER ',' CSV HEADER;
