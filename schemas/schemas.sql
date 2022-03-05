@@ -20,7 +20,7 @@ CREATE TABLE reviews (
   summary VARCHAR(1000),
   body VARCHAR(800),
   recommend BOOLEAN,
-  reported BOOLEAN,
+  reported BOOLEAN DEFAULT false,
   reviewer_name VARCHAR(30),
   reviewer_email VARCHAR(40),
   response VARCHAR(800),

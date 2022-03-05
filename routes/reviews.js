@@ -9,42 +9,61 @@ module.exports = {
     const count = req.query.count || 5;
     try {
       const result = await db.query(
-        // `SELECT  r.review_id, rating, summary, recommend, response, body, date_added, reviewer_name, helpfulness,
-        // ARRAY(SELECT p.id, p.photo_url FROM photos p WHERE p.review_id = r.review_id) as photos
-        // FROM reviews r
-        // WHERE r.product_id = ${product_id};
-        // `,
+        // 620 ms
+        // `SELECT r.review_id, rating,
+        // summary, recommend, response, body, date,
+        // reviewer_name, helpfulness, ARRAY_AGG((p.id, p.photo_url)) as photos
+        // FROM reviews r LEFT JOIN photos p ON r.review_id = p.review_id
+        // WHERE product_id = ${product_id}
+        // GROUP BY r.review_id;`,
 
-        // `SELECT  r.review_id, rating, summary, recommend, response, body, date, reviewer_name, helpfulness
-        // FROM reviews r
-        // WHERE r.product_id = ${product_id};
-        // `,
-
+        // 639 ms
         `SELECT r.review_id, rating,
         summary, recommend, response, body, date,
-        reviewer_name, helpfulness, ARRAY_AGG(p.photo_url) as photos
+        reviewer_name, helpfulness, json_agg(json_build_object(
+          'id',p.id, 'url', p.photo_url
+          )) as photos
         FROM reviews r LEFT JOIN photos p ON r.review_id = p.review_id
         WHERE product_id = ${product_id}
         GROUP BY r.review_id;`,
-
-        //  ON reviews.review_id = photos.review_id WHERE product_id =  ${product_id};`,
         [],
       );
       res.status(200).send(result.rows);
+      // if query is empty it will return the empty object with a 200 code
     } catch (err) {
+      // no product id sends a 422
       res.status(500).send(err);
     }
   },
 
-  postReview: async (req, res) => {},
+  // this one is gonna be fat
+  postReview: async (req, res) => {
+    // req.body object stuff
+    // product id
+    // rating int 1-5
+    // summary
+    // body
+    // recommend bool
+    // name
+    // email
+    // photos array
+    //    text link items
+    // characteristics object
+    //    characteristic id key and int 1-5 value
+  },
 
   reportReview: async (req, res) => {
-    // try {
-    //   await db.query();
-    //   res.sendStatus(204);
-    // } catch (err) {
-    //   res.sendStatus(404);
-    // }
+    const { review_id } = req.params;
+    try {
+      await db.query(
+        `UPDATE reviews
+        SET reported = true
+        WHERE review_id = ${review_id}`,
+      );
+      res.sendStatus(204);
+    } catch (err) {
+      res.sendStatus(404);
+    }
   },
 
   markHelpful: async (req, res) => {
@@ -64,3 +83,5 @@ module.exports = {
     }
   },
 };
+
+// when pulling data out of database, data structures and algorithm knowledge helps

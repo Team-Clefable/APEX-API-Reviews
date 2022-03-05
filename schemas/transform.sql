@@ -57,6 +57,13 @@ UPDATE product_characteristics_join
 -- load final characteristics_review table
 -- INSERT INTO characteristics_reviews (id, review_id, char_value)
 --   SELECT
+ALTER TABLE temp_characteristics_reviews DROP COLUMN IF EXISTS updated_id;
+ALTER TABLE temp_characteristics_reviews ADD COLUMN updated_id INT references characteristics(id);
+
+UPDATE temp_characteristics_reviews
+  SET updated_id = c.updated_id
+  FROM product_characteristics_join c
+  WHERE characteristic_id = c.id;
 
 -- ALTER TABLES
 
@@ -66,3 +73,8 @@ UPDATE product_characteristics_join
 -- -- alter and drop unix column
 
 -- Link up foreign keys
+
+-- add indices
+-- -- index product id of reviews
+-- -- index review id of photos
+-- --
