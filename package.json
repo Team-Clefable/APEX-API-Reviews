@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "k6 run testing/index.js",
     "server": "node server/index.js",
     "server-dev": "nodemon server/index.js",
     "build-db": "psql -d reviews -f schemas/schemas.sql",
@@ -24,7 +24,8 @@
   "homepage": "https://github.com/Team-Clefable/Clefable-API-Reviews#readme",
   "dependencies": {
     "express": "^4.17.3",
-    "pg": "^8.7.3"
+    "pg": "^8.7.3",
+    "pg-format": "^1.0.4"
   },
   "devDependencies": {
     "eslint": "^8.10.0",
