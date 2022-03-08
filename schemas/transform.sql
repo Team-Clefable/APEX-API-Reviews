@@ -153,6 +153,11 @@ ALTER TABLE characteristics_reviews DROP COLUMN old_characteristic_id;
 ALTER TABLE product_characteristics_join DROP COLUMN characteristic_name;
 ALTER TABLE reviews DROP COLUMN date_unix;
 
+/* ------------------- RESET PRIMARY KEY INCREMENT AFTER LOAD ------------------- */
+SELECT SETVAL((SELECT PG_GET_SERIAL_SEQUENCE('"reviews"', 'review_id')), (SELECT (MAX("review_id") + 1) FROM "reviews"), FALSE);
+SELECT SETVAL((SELECT PG_GET_SERIAL_SEQUENCE('"photos"', 'id')), (SELECT (MAX("id") + 1) FROM "photos"), FALSE);
+SELECT SETVAL((SELECT PG_GET_SERIAL_SEQUENCE('"characteristics_reviews"', 'id')), (SELECT (MAX("id") + 1) FROM "characteristics_reviews"), FALSE);
+
 /* ---------------------------- Add secondary indices ---------------------------- */
 CREATE INDEX reviews_product_id ON reviews (product_id);
 CREATE INDEX photos_review_id ON photos (review_id);
