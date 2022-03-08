@@ -23,7 +23,9 @@ module.exports = {
       }
 
       const characteristics = {};
-      // Ask staff about this loop
+      // ASK STAFF: This loop ok?
+      // only 6 possible characteristics so technically a linear time operation
+      // Calculates average of characteristic scores
       rows.forEach((queryObj) => {
         characteristics[queryObj.name] = {
           id: queryObj.id,
