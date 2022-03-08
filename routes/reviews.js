@@ -26,7 +26,6 @@ module.exports = {
     const queryResultStartIndex = count * (page - 1);
     const queryResultEndIndex = count * page;
 
-    // ASK STAFF: Multiple try catch blocks for error handling? Better error handling feedback?
     try {
       const modifiedQueryObject = {
         product: product_id,
@@ -67,6 +66,7 @@ module.exports = {
     }
   },
 
+  // ASK STAFF: Multiple try catch blocks for error handling? Better error handling feedback?
   postReview: async (req, res) => {
     let newReviewId;
     const {
