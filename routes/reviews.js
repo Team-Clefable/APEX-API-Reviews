@@ -1,3 +1,4 @@
+/* eslint-disable radix */
 const format = require('pg-format');
 
 const db = require('../db');
@@ -69,15 +70,15 @@ module.exports = {
   postReview: async (req, res) => {
     let newReviewId;
     const {
-      product_id, // int
-      rating, // int
-      summary, // text
-      body, // text
-      recommend, // bool
-      name, // text
-      email, // text
-      photos, // array of text
-      characteristics, // object {id: review_value}
+      product_id,
+      rating,
+      summary,
+      body,
+      recommend,
+      name,
+      email,
+      photos,
+      characteristics,
     } = req.body;
 
     try {
@@ -128,6 +129,7 @@ module.exports = {
       res.status(500).send(`Characteristics table insert problem. Error: ${err.message}`);
     }
 
+    // Optimize later to do bulk insert
     try {
       Object.entries(characteristics).forEach(async (char_entry) => {
         const characteristic_id = parseInt(char_entry[0]);
@@ -193,5 +195,3 @@ module.exports = {
     }
   },
 };
-
-// when pulling data out of database, data structures and algorithm knowledge helps
