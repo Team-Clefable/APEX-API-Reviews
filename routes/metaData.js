@@ -12,20 +12,22 @@ module.exports = {
           ON m.product_id = j.product_id
           JOIN characteristics c
           ON j.characteristic_id = c.id
-          WHERE m.product_id = ${product_id}
+          WHERE m.product_id = $1;
         `,
+        [product_id],
       );
 
       const { rows } = queryResult;
       if (!rows.length) {
         res.status(404).send('Oops! Looks like that product does not exist.');
         return;
+        // throw new Error('Oops! Looks like that product does not exist.');
       }
 
       const characteristics = {};
+      // Optimize later
       // ASK STAFF: This loop ok?
-      // only 6 possible characteristics so technically a linear time operation
-      // Calculates average of characteristic scores
+      // TRUMAN: loop is not ideal do in backend and DB
       rows.forEach((queryObj) => {
         characteristics[queryObj.name] = {
           id: queryObj.id,
@@ -51,7 +53,7 @@ module.exports = {
 
       res.status(200).send(formattedQueryResult);
     } catch (err) {
-      res.status(500).send(err);
+      res.status(500).send(err.message);
     }
   },
 };
