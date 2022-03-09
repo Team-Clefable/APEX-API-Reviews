@@ -1,8 +1,12 @@
-// exports.productReview = require('./productReview.js');
 const { Pool } = require('pg');
-const config = require('./config');
+require('dotenv').config();
 
-const pool = new Pool(config);
+const pool = new Pool({
+  host: process.env.PGHOST,
+  user: process.env.PGUSER,
+  password: process.env.PGPASSWORD,
+  database: process.env.PGDATABASE,
+});
 
 module.exports = {
   async query(text, params) {
