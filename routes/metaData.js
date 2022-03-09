@@ -5,19 +5,15 @@ module.exports = {
     const { product_id } = req.query;
     try {
       const queryResult = await db.query(
-        `
-        EXPLAIN ANALYZE
-        SELECT *
+        `SELECT *
           FROM meta m
           JOIN product_characteristics_join j
           ON m.product_id = j.product_id
           JOIN characteristics c
           ON j.characteristic_id = c.id
-          WHERE m.product_id = $1;
-        `,
+          WHERE m.product_id = $1;`,
         [product_id],
       );
-
       const { rows } = queryResult;
       if (!rows.length) {
         res.status(404).send('Oops! Looks like that product does not exist.');
