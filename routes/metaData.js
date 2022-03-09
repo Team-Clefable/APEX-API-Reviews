@@ -6,6 +6,7 @@ module.exports = {
     try {
       const queryResult = await db.query(
         `
+        EXPLAIN ANALYZE
         SELECT *
           FROM meta m
           JOIN product_characteristics_join j
@@ -18,11 +19,11 @@ module.exports = {
       );
 
       const { rows } = queryResult;
-      if (!rows.length) {
-        res.status(404).send('Oops! Looks like that product does not exist.');
-        return;
-        // throw new Error('Oops! Looks like that product does not exist.');
-      }
+      // if (!rows.length) {
+      //   res.status(404).send('Oops! Looks like that product does not exist.');
+      //   return;
+      //   // throw new Error('Oops! Looks like that product does not exist.');
+      // }
 
       const characteristics = {};
       // Optimize later
