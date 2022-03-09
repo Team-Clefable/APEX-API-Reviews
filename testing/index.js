@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 import http from 'k6/http';
 import { check, sleep } from 'k6';
 import { Counter } from 'k6/metrics';
@@ -12,14 +13,13 @@ export const options = {
 const randomNumber = (max, min) => (
   Math.floor(Math.random() * (max - 1 + min) + min)
 );
-// let count = randomNumber(100000, 1);
-let count = 15;
+let count = randomNumber(100000, 1);
 const url = `http://localhost:3000/api/reviews/meta?product_id=${count}`;
 // const url = `http://localhost:3000/api/reviews?product_id=${count}`;
 
 export default function () {
   const res = http.get(url);
-  sleep(1);
+  sleep(0.1);
   check(res, {
     'status was 200': (r) => r.status === 200,
     'transaction time< 200ms': (r) => r.timings.duration < 200,
@@ -27,6 +27,5 @@ export default function () {
     'transaction time< 1000ms': (r) => r.timings.duration < 1000,
     'transaction time< 2000ms': (r) => r.timings.duration < 2000,
   });
-  // count = randomNumber(100000, 1);
-  count++;
+  count = randomNumber(100000, 1);
 }

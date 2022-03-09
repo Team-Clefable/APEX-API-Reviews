@@ -45,20 +45,20 @@ module.exports = {
         ORDER BY $2;`,
         [product_id, sortQueryBy],
       );
-      // if (!queryResult.rows.length) {
-      //   res.status(404).send('Oops! Looks like that product does not exist.');
-      //   return;
-      // }
+      if (!queryResult.rows.length) {
+        res.status(404).send('Oops! Looks like that product does not exist.');
+        return;
+      }
       // Optimize later
       // ASK STAFF: should i use slice here? better options?
       // TRUMAN: dont use slice, figure out how to use pg to filter query beforehand
       modifiedQueryObject.results = queryResult.rows
         .slice(queryResultStartIndex, queryResultEndIndex);
 
-      // if (!modifiedQueryObject.results.length) {
-      //   res.status(404).send('Oops! Looks like there are no reviews on that page. Try an earlier page.');
-      //   return;
-      // }
+      if (!modifiedQueryObject.results.length) {
+        res.status(404).send('Oops! Looks like there are no reviews on that page. Try an earlier page.');
+        return;
+      }
 
       res.status(200).send(modifiedQueryObject);
     } catch (err) {
