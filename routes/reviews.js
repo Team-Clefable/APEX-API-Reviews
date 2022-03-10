@@ -46,7 +46,13 @@ module.exports = {
         [product_id, sortQueryBy],
       );
       if (!queryResult.rows.length) {
-        res.status(200).send('Oops! Looks like that product does not exist.');
+        // res.status(200).send('Oops! Looks like that product does not exist.');
+        res.status(200).send({
+          product_id,
+          page,
+          count,
+          results: [],
+        });
         return;
       }
       // Optimize later

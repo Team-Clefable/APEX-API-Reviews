@@ -16,9 +16,15 @@ module.exports = {
       );
       const { rows } = queryResult;
       if (!rows.length) {
-        res.status(200).send('Oops! Looks like that product does not exist.');
-        return;
+        // res.status(404).send('Oops looks like this product doesnt have any reviews');
         // throw new Error('Oops! Looks like that product does not exist.');
+        res.status(200).send({
+          product_id,
+          ratings: {},
+          recommended: {},
+          characteristics: {},
+        });
+        return;
       }
 
       const characteristics = {};
