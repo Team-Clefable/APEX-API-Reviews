@@ -1,8 +1,9 @@
 const express = require('express');
 const routes = require('./routes');
+require('dotenv').config();
 
 const app = express();
-const PORT = 3000; // process.env.PORT
+const PORT = process.env.SERVER_PORT || 3000;
 
 app.use(express.json());
 app.use('/api/reviews', routes);
