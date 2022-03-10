@@ -15,11 +15,11 @@ module.exports = {
         [product_id],
       );
       const { rows } = queryResult;
-      // if (!rows.length) {
-      //   res.status(404).send('Oops! Looks like that product does not exist.');
-      //   return;
-      //   // throw new Error('Oops! Looks like that product does not exist.');
-      // }
+      if (!rows.length) {
+        res.status(200).send('Oops! Looks like that product does not exist.');
+        return;
+        // throw new Error('Oops! Looks like that product does not exist.');
+      }
 
       const characteristics = {};
       // Optimize later

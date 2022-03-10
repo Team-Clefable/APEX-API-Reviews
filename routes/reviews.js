@@ -46,7 +46,7 @@ module.exports = {
         [product_id, sortQueryBy],
       );
       if (!queryResult.rows.length) {
-        res.status(404).send('Oops! Looks like that product does not exist.');
+        res.status(200).send('Oops! Looks like that product does not exist.');
         return;
       }
       // Optimize later
@@ -56,7 +56,7 @@ module.exports = {
         .slice(queryResultStartIndex, queryResultEndIndex);
 
       if (!modifiedQueryObject.results.length) {
-        res.status(404).send('Oops! Looks like there are no reviews on that page. Try an earlier page.');
+        res.status(200).send('Oops! Looks like there are no reviews on that page. Try an earlier page.');
         return;
       }
 
