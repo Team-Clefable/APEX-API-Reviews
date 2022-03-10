@@ -10,7 +10,7 @@
     "build-db": "psql -d reviews -f schemas/schemas.sql",
     "load-db": "psql -d reviews -f schemas/load.sql",
     "transform-db": "psql -d reviews -f schemas/transform.sql",
-    "ec2-restore-db": "sudo -u postgres pg_restore -d reviews reviews.dump"
+    "ec2-restore-db": "sudo -u postgres pg_restore -d reviews data/reviews.dump"
   },
   "repository": {
     "type": "git",
