@@ -1,17 +1,15 @@
 const express = require('express');
-// const routes = require('./routes');
 require('dotenv').config();
 
-const { getMetaData } = require('./routes/metaData');
+const { getMetaData } = require('./controllers/metaData');
 const {
   getReviews, postReview, reportReview, markHelpful,
-} = require('./routes/reviews');
+} = require('./controllers/reviews');
 
 const app = express();
 const PORT = process.env.SERVER_PORT || 3000;
 
 app.use(express.json());
-// app.use('/api/reviews', routes);
 
 app.get('/api/reviews', getReviews);
 app.post('/api/reviews', postReview);
