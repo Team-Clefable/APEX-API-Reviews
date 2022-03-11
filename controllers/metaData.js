@@ -16,8 +16,6 @@ module.exports = {
       );
       const { rows } = queryResult;
       if (!rows.length) {
-        // res.status(404).send('Oops looks like this product doesnt have any reviews');
-        // throw new Error('Oops! Looks like that product does not exist.');
         res.status(200).send({
           product_id,
           ratings: {},
@@ -25,11 +23,12 @@ module.exports = {
           characteristics: {},
         });
         return;
+        // res.status(404).send('Oops looks like this product doesnt have any reviews');
+        // throw new Error('Oops! Looks like that product does not exist.');
       }
 
       const characteristics = {};
       // Optimize later
-      // ASK STAFF: This loop ok?
       // TRUMAN: loop is not ideal do in backend and DB
       rows.forEach((queryObj) => {
         characteristics[queryObj.name] = {
