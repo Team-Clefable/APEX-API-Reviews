@@ -43,14 +43,12 @@ module.exports = {
           });
           return;
         }
-        const formattedQueryResults = {};
-        const sortOrder = [];
-        let review;
         if (queryResultEndIndex > queryResult.rows.length) {
           queryResultEndIndex = queryResult.rows.length;
         }
-        for (let i = queryResultStartIndex; i < queryResultEndIndex; i += 1) {
-          review = queryResult?.rows[i];
+        const formattedQueryResults = {};
+        const sortOrder = [];
+        queryResult.rows.forEach((review) => {
           if (!formattedQueryResults[review.review_id]) {
             sortOrder.push(review.review_id);
             formattedQueryResults[review.review_id] = {
@@ -67,16 +65,19 @@ module.exports = {
             };
           } else {
             formattedQueryResults[review.review_id].photos.push({ id: review.id, url: review.url });
-            if (queryResultEndIndex < queryResult.rows.length) queryResultEndIndex += 1;
           }
+        });
+
+        const sortedFormattedQueryResutls = [];
+        for (let i = queryResultStartIndex; i < queryResultEndIndex; i += 1) {
+          sortedFormattedQueryResutls.push(formattedQueryResults[sortOrder[i]]);
         }
 
         res.status(200).send({
           product: product_id,
           page,
           count,
-          results: sortOrder.map((sortedReviewID) => formattedQueryResults[sortedReviewID]),
-          // can use a sort operation to go from On to logn time
+          results: sortedFormattedQueryResutls,
         });
       })
       .catch((err) => res.status(500).send(err.message));
