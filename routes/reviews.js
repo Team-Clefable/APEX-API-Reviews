@@ -17,16 +17,12 @@ module.exports = {
       case 'newest':
         sortQueryBy = 'date DESC';
         break;
-      case 'relevant':
-        sortQueryBy = 'helpfulness DESC, date DESC';
-        break;
       default:
-        sortQueryBy = 'helpfulness DESC';
+        sortQueryBy = 'helpfulness DESC, date desc';
     }
     const queryResultStartIndex = count * (page - 1);
     let queryResultEndIndex = count * page;
 
-    // console.log(sortQueryBy);
     db.query(
       `SELECT r.review_id, r.rating, r.summary, r.recommend,
           r.response, r.body, r.date, r.reviewer_name, r.helpfulness, p.id, p.photo_url as url
@@ -34,11 +30,10 @@ module.exports = {
         LEFT JOIN photos p
         ON r.review_id = p.review_id
         WHERE r.product_id = $1
-        ORDER BY ${sortQueryBy} ;`,
+        ORDER BY ${sortQueryBy};`,
       [product_id],
     )
       .then((queryResult) => {
-        // console.log(queryResult.rows);
         if (!queryResult.rows.length || queryResultStartIndex >= queryResult.rows.length) {
           res.status(200).send({
             product: product_id,
@@ -76,33 +71,6 @@ module.exports = {
           }
         }
 
-        // queryResult.rows.forEach((review, index) => {
-        //   // console.log(review.helpfulness, index, review.review_id);
-        //   if (
-        //     !formattedQueryResults[review.review_id]
-        //     && queryResultStartIndex <= index
-        //     && index < queryResultEndIndex
-        //   ) {
-        //     formattedQueryResults[review.review_id] = {
-        //       review_id: review.review_id,
-        //       rating: review.rating,
-        //       summary: review.summary,
-        //       recommend: review.recommend,
-        //       response: review.response,
-        //       body: review.body,
-        //       date: review.date,
-        //       reviewer_name: review.reviewer_name,
-        //       helpfulness: review.helpfulness,
-        //       photos: review.url ? Array({ id: review.id, url: review.url }) : [],
-        //     };
-        //   } else if (
-        //     formattedQueryResults
-        //     && queryResultStartIndex <= index
-        //     && index < queryResultEndIndex
-        //   ) {
-        //     formattedQueryResults[review.review_id].photos.push({ id: review.id, url: review.url });
-        //   }
-        // });
         res.status(200).send({
           product: product_id,
           page,
@@ -113,74 +81,6 @@ module.exports = {
       })
       .catch((err) => res.status(500).send(err.message));
   },
-
-  // getReviews: async (req, res) => {
-  //   const { product_id } = req.query;
-  //   const page = req.query.page || 1;
-  //   const count = req.query.count || 5;
-  //   const sortParam = req.query.sort || 'relevant';
-  //   let sortQueryBy;
-  //   switch (sortParam) {
-  //     case 'helpful':
-  //       sortQueryBy = 'helpfulness DESC';
-  //       break;
-  //     case 'newest':
-  //       sortQueryBy = 'date DESC';
-  //       break;
-  //     case 'relevant':
-  //       sortQueryBy = 'helpfulness DESC, date DESC';
-  //       break;
-  //     default:
-  //       sortQueryBy = 'helpfulness';
-  //   }
-  //   const queryResultStartIndex = count * (page - 1);
-  //   const queryResultEndIndex = count * page;
-
-  //   try {
-  //     const modifiedQueryObject = {
-  //       product: product_id,
-  //       page,
-  //       count,
-  //     };
-
-  //     const queryResult = await db.query(
-  //       `SELECT r.review_id, rating,
-  //       summary, recommend, response, body, date,
-  //       reviewer_name, helpfulness, json_agg(json_build_object(
-  //         'id',p.id, 'url', p.photo_url
-  //         )) as photos
-  //       FROM reviews r LEFT JOIN photos p ON r.review_id = p.review_id
-  //       WHERE product_id = $1
-  //       GROUP BY r.review_id
-  //       ORDER BY $2;`,
-  //       [product_id, sortQueryBy],
-  //     );
-  //     if (!queryResult.rows.length) {
-  //       // res.status(200).send('Oops! Looks like that product does not exist.');
-  //       res.status(200).send({
-  //         product_id,
-  //         page,
-  //         count,
-  //         results: [],
-  //       });
-  //       return;
-  //     }
-  //     // Optimize later
-  //     // ASK STAFF: should i use slice here? better options?
-  //     // TRUMAN: dont use slice, figure out how to use pg to filter query beforehand
-  //     modifiedQueryObject.results = queryResult.rows
-  //       .slice(queryResultStartIndex, queryResultEndIndex);
-
-  //     if (!modifiedQueryObject.results.length) {
-  //       res.status(200).send('Oops! Looks like there are no reviews on that page. Try an earlier page.');
-  //       return;
-  //     }
-
-  //     res.status(200).send(modifiedQueryObject);
-  //   } catch (err) {
-  //     res.status(500).send(err);
-  //   }
-  // },
 
   // ASK STAFF: Multiple try catch blocks for error handling? Better error handling feedback?
   postReview: async (req, res) => {
