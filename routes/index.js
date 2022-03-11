@@ -2,10 +2,10 @@
 const router = require('express').Router();
 const { getMetaData } = require('./metaData');
 const {
-  getReview, postReview, reportReview, markHelpful,
+  getReviews, postReview, reportReview, markHelpful,
 } = require('./reviews');
 
-router.get('/', getReview);
+router.get('/', getReviews);
 
 router.post('/', postReview);
 
