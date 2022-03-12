@@ -63,12 +63,14 @@ npm run server-dev
 ## REST API
 ### GET /api/reviews
 Query Parameters
+
 | Parameter | Typee | Description |
 | --------- | ----- | ----------- |
 | product_id| INT   | Specifies product for which review to retrieve|
 | page | INT | Selects the page of results to return. Default 1. |
 | count | INT | Specifies how many results per page. Default 5 |
 | sort | TEXT | "newest", "helpful", "relevant". Default "relevant" |
+
 Status Code 200:
 ```bash
 {
@@ -98,6 +100,7 @@ Status Code 200:
 ```
 ### POST /api/reviews
 Body Parameters
+
 | Parameter | Typee | Description |
 | --------- | ----- | ----------- |
 | product_id| INT   | Specifies product for which review to retrieve |
@@ -109,14 +112,51 @@ Body Parameters
 | email | TEXT | email for question asker |
 | photos | ARRAY | Array of text that link to images to be shown |
 | characteristics | OBJECT | keys representing the characteristic_id and the value rating for that specific characteristic |
+
 Status code 201
 ### GET /api/reviews/meta
 Query Parameters
+
 | Parameter | Typee | Description |
 | --------- | ----- | ----------- |
 | product_id| INT   | Specifies product for which review to retrieve |
+
 Status Code 200:
 ```bash
+{
+  "product_id": [product_id],
+  "ratings": {
+    "1": [rating_count],
+    "2": [rating_count],
+    "3": [rating_count],
+    "4": [rating_count],
+    "5": [rating_count]
+  },
+  "recommended": {
+    "false": [false_count],
+    "true": [true_count]
+  },
+  "characteristics": {
+    "characteristic_name": {
+      "id": [characteristic_id],
+      "value": [average_characteristics_value]
+    },
+}
+}
 ```
 ### PUT /api/reviews/:review_id/helpful
+Parameters
+
+| Parameter | Typee | Description |
+| --------- | ----- | ----------- |
+| review_id| INT   | Specifies review mark as helpful |
+
+Status Code 204
 ### PUT /api/reviews/:review_id/report
+Parameters
+
+| Parameter | Typee | Description |
+| --------- | ----- | ----------- |
+| review_id| INT   | Specifies review mark as reported |
+
+Status Code 204
