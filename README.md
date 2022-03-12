@@ -68,12 +68,55 @@ Query Parameters
 | product_id| INT   | Specifies product for which review to retrieve|
 | page | INT | Selects the page of results to return. Default 1. |
 | count | INT | Specifies how many results per page. Default 5 |
-| sort | TEXT | "newest", "helpful", "relevant" |
+| sort | TEXT | "newest", "helpful", "relevant". Default "relevant" |
+Status Code 200:
+```bash
+{
+  "product": [product_id],
+  "page": [page_number],
+  "count": [count_number],
+  "results": [
+    {
+      "review_id": [review_id],
+      "rating": [rating_number],
+      "summary": "summary of review",
+      "recommend": [bool],
+      "response": [text or null],
+      "body": "body text of review",
+      "date": "2022-02-25T00:00:00.000Z",
+      "reviewer_name": "reviewer",
+      "helpfulness": [helpfulness count],
+      "photos": [
+        {
+          "id": [photo_id],
+          "url": "photo_url",
+        },
+      ]
+    },
+  ]
+}
+```
 ### POST /api/reviews
+Body Parameters
+| Parameter | Typee | Description |
+| --------- | ----- | ----------- |
+| product_id| INT   | Specifies product for which review to retrieve |
+| rating | INT   | number 1-5 indicating the review rating |
+| summary | TEXT   | summary of text review |
+| body | TEXT   | Continued or full text of the review |
+| recommend | BOOL | indicating if the reviewer recommends the product |
+| name | TEXT | Username for question asker |
+| email | TEXT | email for question asker |
+| photos | ARRAY | Array of text that link to images to be shown |
+| characteristics | OBJECT | keys representing the characteristic_id and the value rating for that specific characteristic |
+Status code 201
 ### GET /api/reviews/meta
 Query Parameters
 | Parameter | Typee | Description |
 | --------- | ----- | ----------- |
-| product_id| INT   | Specifies product for which review to retrieve|
+| product_id| INT   | Specifies product for which review to retrieve |
+Status Code 200:
+```bash
+```
 ### PUT /api/reviews/:review_id/helpful
 ### PUT /api/reviews/:review_id/report
