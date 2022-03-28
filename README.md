@@ -9,6 +9,7 @@ This is a backend microservice designed for the ratings and reviews of an ecomme
 - PostgreSQL through either homebrew or from the postgreSQL website
   https://www.postgresql.org/download/
 - Node 14+
+- Express
 ### Installation
 - Clone the project
 - Use npm to install project dependencies
