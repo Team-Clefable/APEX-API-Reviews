@@ -83,7 +83,6 @@ module.exports = {
       .catch((err) => res.status(500).send(err.message));
   },
 
-  // ASK STAFF: Multiple try catch blocks for error handling? Better error handling feedback?
   postReview: async (req, res) => {
     let newReviewId;
     const {
@@ -146,7 +145,6 @@ module.exports = {
       res.status(500).send(`Characteristics table insert problem. Error: ${err.message}`);
     }
 
-    // Optimize later to do bulk insert
     try {
       Object.entries(characteristics).forEach(async (char_entry) => {
         const characteristic_id = parseInt(char_entry[0]);

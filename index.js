@@ -20,10 +20,6 @@ app.put('/api/reviews/:review_id/report', reportReview);
 
 app.put('api/reviews/:review_id/helpful', markHelpful);
 
-// app.get(`/${process.env.LOADER_IO_KEY}`, (req, res) => {
-//   res.send(process.env.LOADER_IO_KEY);
-// });
-
 app.listen(PORT, () => {
   console.log(`Listening on port: ${PORT}`);
 });

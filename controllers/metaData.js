@@ -23,13 +23,9 @@ module.exports = {
           characteristics: {},
         });
         return;
-        // res.status(404).send('Oops looks like this product doesnt have any reviews');
-        // throw new Error('Oops! Looks like that product does not exist.');
       }
 
       const characteristics = {};
-      // Optimize later
-      // TRUMAN: loop is not ideal do in backend and DB
       rows.forEach((queryObj) => {
         characteristics[queryObj.name] = {
           id: queryObj.id,
