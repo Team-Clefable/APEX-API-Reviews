@@ -161,3 +161,7 @@ Parameters
 | review_id| INT   | Specifies review mark as reported |
 
 Status Code 204
+
+
+## Contributors
+[Chris Josephs](https://github.com/cmjosephs)
